@@ -24,3 +24,61 @@ object WordCount{
     }
 
 }
+
+
+
+
+
+
+
+
+find /usr -name "hadoop*sources*.jar"
+find ~ -name "hadoop*sources*.jar"
+
+////////////Copy path
+
+start-dfs.sh
+start-yarn.sh
+jps
+
+unzip path(of jar) OR jar xf path
+ls  //check org
+cd /org/apache/hadoop/...
+
+
+cp (path of wordcount.java) Mock(path)
+cd Mock
+nano WordCount.java
+// copy paste remove license and packages
+
+
+javac -cp $(hadoop classpath) WordCount.java
+jar cf WordCount.jar WordCount*.class
+hdfs dfs -rm -r /input /output
+hdfs dfs -mkdir /input
+hdfs dfs -put ./input.txt /input
+hadoop jar WordCount.jar WordCount /input/input.txt /output
+hdfs dfs -cat /output/part-r-00000
+
+
+
+
+
+
+
+
+
+
+code
+
+
+spark-shell -i WordCount.scala(path) 
+
+
+
+echo $SPARK_HOME                /// ~/ .bashrc
+scalac -cp 'path/jars/*' WordCount.scala
+jar cf WordCount.jar WordCount*.class
+spark-submit --class WordCount WordCount.jar file://iput(path) file://output(path)
+
+
